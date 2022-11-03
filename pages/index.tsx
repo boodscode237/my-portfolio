@@ -1,4 +1,4 @@
-import type { GetStaticProps } from 'next'
+import type {GetServerSideProps, GetStaticProps} from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import About from '../components/About'
@@ -24,7 +24,8 @@ type Props = {
 }
 
 const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
-  return (
+  // @ts-ignore
+    return (
     <div className="bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#f7ab0a]/80">
       <Head>
         <title>Donald Brice</title>
@@ -68,8 +69,8 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
 }
 
 export default Home
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
+// getStaticProps
+export const getServerSideProps : GetServerSideProps<Props> = async () => {
   const pageInfo: PageInfo = await fetchPageInfo() ?? null;
   const experiences: Experience[] = await fetchExperience() ?? null;
   const skills: Skill[] = await fetchSkills();
@@ -81,7 +82,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       experiences,
       skills,
       projects,
-      socials
+      socials,
     },
     revalidate: 20,
   }  
